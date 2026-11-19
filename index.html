@@ -1,0 +1,957 @@
+<!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><title data-en="Interactive Training Path">مسار التدريب التفاعلي</title>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f6f9;
+    --surface:#ffffff;
+    --surface-2:#fbfafc;
+    --border:#e3dfe8;
+    --text:#211c2b;
+    --text-dim:#655f72;
+    --text-faint:#948d9f;
+    --teal:#00A4A6;
+    --teal-ink:#005f60;
+    --teal-tint:#e1f5f5;
+    --purple:#653165;
+    --purple-ink:#3e1d3f;
+    --purple-tint:#f0e6f0;
+    --amber:#B9740F;
+    --amber-ink:#6b4308;
+    --amber-tint:#faf0dd;
+    --neutral-tint:#eeecf2;
+    --shadow: 0 1px 2px rgba(40,25,50,.05), 0 8px 24px -14px rgba(40,25,50,.18);
+    --d1:#00A4A6; --d1t:#e1f5f5;
+    --d2:#2C8C82; --d2t:#e2f2ef;
+    --d3:#653165; --d3t:#f0e6f0;
+    --d4:#B8541F; --d4t:#fbe9df;
+    --d5:#B9740F; --d5t:#faf0dd;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#18151d;
+      --surface:#221e29;
+      --surface-2:#282430;
+      --border:#3a3444;
+      --text:#f1eef5;
+      --text-dim:#b6afc4;
+      --text-faint:#847d94;
+      --teal:#3fc9cb;
+      --teal-ink:#bdf0f0;
+      --teal-tint:#12302f;
+      --purple:#c497c5;
+      --purple-ink:#ecdcec;
+      --purple-tint:#332235;
+      --amber:#e3a34a;
+      --amber-ink:#f7ddb0;
+      --amber-tint:#3a2c14;
+      --neutral-tint:#2c2733;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.5);
+      --d1:#3fc9cb; --d1t:#12302f;
+      --d2:#59c2ae; --d2t:#132c26;
+      --d3:#c497c5; --d3t:#332235;
+      --d4:#e08a52; --d4t:#3a2416;
+      --d5:#e3a34a; --d5t:#3a2c14;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#18151d;
+    --surface:#221e29;
+    --surface-2:#282430;
+    --border:#3a3444;
+    --text:#f1eef5;
+    --text-dim:#b6afc4;
+    --text-faint:#847d94;
+    --teal:#3fc9cb;
+    --teal-ink:#bdf0f0;
+    --teal-tint:#12302f;
+    --purple:#c497c5;
+    --purple-ink:#ecdcec;
+    --purple-tint:#332235;
+    --amber:#e3a34a;
+    --amber-ink:#f7ddb0;
+    --amber-tint:#3a2c14;
+    --neutral-tint:#2c2733;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -14px rgba(0,0,0,.5);
+    --d1:#3fc9cb; --d1t:#12302f;
+    --d2:#59c2ae; --d2t:#132c26;
+    --d3:#c497c5; --d3t:#332235;
+    --d4:#e08a52; --d4t:#3a2416;
+    --d5:#e3a34a; --d5t:#3a2c14;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    direction:rtl;
+    font-family:'Tajawal',-apple-system,'Segoe UI',Tahoma,sans-serif;
+    line-height:1.65;
+    font-variant-numeric:tabular-nums;
+  }
+  h1,h2,h3,.display{font-family:'Cairo',-apple-system,'Segoe UI',Tahoma,sans-serif; text-wrap:balance;}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace; direction:ltr; unicode-bidi:isolate;}
+
+  a{color:inherit;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* ===== Header ===== */
+  .masthead{
+    background:linear-gradient(135deg,var(--purple) 0%, var(--teal) 100%);
+    border-radius:20px;
+    padding:34px 32px;
+    color:#fff;
+    box-shadow:var(--shadow);
+    margin-bottom:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .masthead::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 85% 20%, rgba(255,255,255,.16), transparent 55%);
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; direction:ltr; unicode-bidi:isolate; display:inline-block;
+    font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+    background:rgba(255,255,255,.16); padding:4px 10px; border-radius:99px;
+    margin-bottom:14px;
+  }
+  .masthead h1{font-size:26px; font-weight:800; margin:0 0 8px; color:#fff;}
+  .masthead p{margin:0; font-size:14.5px; color:rgba(255,255,255,.88); max-width:60ch;}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px; position:relative;}
+  .stat{
+    background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22);
+    border-radius:12px; padding:10px 16px; min-width:96px;
+  }
+  .stat b{display:block; font-family:'Cairo',sans-serif; font-size:20px; font-weight:800;}
+  .stat span{font-size:11.5px; color:rgba(255,255,255,.82);}
+
+  /* ===== Daily template legend ===== */
+  .legend{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:18px 20px; margin-bottom:22px; box-shadow:var(--shadow);
+  }
+  .legend h2{font-size:14px; margin:0 0 12px; color:var(--text-dim); font-weight:700;}
+  .legend-row{column-count:2; column-gap:28px;}
+  .legend-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--text-dim); padding:5px 0; break-inside:avoid;}
+  .legend-time{font-family:'IBM Plex Mono',monospace; direction:ltr; unicode-bidi:isolate; color:var(--text-faint); font-size:11.5px;}
+  .legend-dot{width:9px;height:9px;border-radius:3px;flex:none;}
+
+  /* ===== Day tabs ===== */
+  .day-tabs{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:8px;
+    position:sticky; top:0; z-index:30; background:var(--bg);
+    margin:0 -20px 18px; padding:10px 20px;
+  }
+  .day-tabs.stuck{box-shadow:0 10px 18px -14px rgba(40,25,50,.5); border-bottom:1px solid var(--border); padding-top:6px; padding-bottom:6px;}
+  .day-tabs.stuck .day-tab{padding:6px 8px; border-radius:11px;}
+  .day-tabs.stuck .day-tab .num{font-size:15px; margin-bottom:1px;}
+  .day-tabs.stuck .day-tab .lbl{font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .day-tab{min-width:0;}
+  .day-tab .lbl{overflow-wrap:anywhere;}
+  body.en{direction:ltr;}
+  .lang-btn{
+    position:fixed; left:18px; bottom:18px; z-index:60; display:flex; align-items:center; gap:8px;
+    background:#653165; color:#fff; border:0; border-radius:99px; padding:11px 18px 11px 14px;
+    font:700 13.5px 'Cairo',sans-serif; cursor:pointer; box-shadow:0 8px 22px -8px rgba(40,25,50,.55);
+    transition:.15s transform,.15s filter;
+  }
+  .lang-btn:hover{transform:translateY(-2px); filter:brightness(1.1);}
+  .lang-btn:focus-visible{outline:3px solid var(--teal); outline-offset:2px;}
+  .lang-btn svg{width:20px;height:20px;flex:none;}
+  .day-tab{
+    background:var(--surface); border:1.5px solid var(--border); border-radius:14px;
+    padding:12px 10px; text-align:center; cursor:pointer; transition:.15s border-color,.15s transform;
+    font-family:inherit;
+  }
+  .day-tab:hover{transform:translateY(-1px);}
+  .day-tab .num{
+    font-family:'Cairo',sans-serif; font-weight:800; font-size:20px; line-height:1;
+    display:block; margin-bottom:6px; color:var(--dc);
+  }
+  .day-tab .lbl{font-size:11.5px; color:var(--text-dim); display:block; line-height:1.4;}
+  .day-tab.active{border-color:var(--dc); background:var(--dt); box-shadow:var(--shadow);}
+  .day-tab:focus-visible{outline:2px solid var(--dc); outline-offset:2px;}
+
+  /* ===== Day panel ===== */
+  .day-panel{display:none;}
+  .day-panel.active{display:block; animation:fade .25s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+  @media (prefers-reduced-motion:reduce){ .day-panel.active{animation:none;} }
+
+  .day-head{
+    display:flex; align-items:center; gap:14px; margin-bottom:18px; padding-inline-start:2px;
+  }
+  .day-head .badge{
+    font-family:'Cairo',sans-serif; font-weight:800; font-size:22px; color:#fff;
+    background:var(--dc); width:48px;height:48px;border-radius:13px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .day-head h2{font-size:20px; margin:0 0 3px; color:var(--text);}
+  .day-head .sub{font-size:13px; color:var(--text-dim); margin:0;}
+
+  .timeline{display:flex; flex-direction:column; gap:12px;}
+
+  .block{
+    background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:18px 20px; box-shadow:var(--shadow);
+    border-inline-start:4px solid var(--block-c, var(--border));
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .block-top{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .block-time{
+    font-family:'IBM Plex Mono',monospace; direction:ltr; unicode-bidi:isolate;
+    font-size:12.5px; font-weight:600; color:var(--text-dim);
+    background:var(--neutral-tint); padding:3px 10px; border-radius:99px;
+  }
+  .block-kind{
+    font-size:11px; font-weight:700; padding:3px 10px; border-radius:99px;
+    background:var(--chip-bg,var(--neutral-tint)); color:var(--chip-c,var(--text-dim));
+  }
+  .block h3{font-size:16px; margin:2px 0 0; font-weight:700;}
+  .block .lead{font-size:12.5px; color:var(--text-dim); margin:-6px 0 0;}
+
+  .part{margin-top:4px;}
+  .part h4{
+    font-size:12.5px; font-weight:700; color:var(--dc); margin:0 0 8px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .part h4::before{content:"◆"; font-size:9px;}
+  ul.pts{margin:0 0 10px; padding-inline-start:20px;}
+  ul.pts li{margin-bottom:6px; font-size:13.5px;}
+  ul.pts li:last-child{margin-bottom:0;}
+  ul.pts b{color:var(--text);}
+  .flow{
+    display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin:6px 0 10px;
+    font-size:12px; color:var(--text-dim);
+  }
+  .flow .fs{
+    background:var(--neutral-tint); border-radius:8px; padding:5px 10px; font-weight:600; color:var(--text);
+  }
+  .flow .ar{color:var(--text-faint); font-size:11px;}
+
+  .link-btn{
+    display:inline-flex; align-items:center; gap:7px; text-decoration:none;
+    background:var(--dc); color:#fff !important; font-size:12.5px; font-weight:700;
+    padding:8px 14px; border-radius:10px; margin-top:4px; width:fit-content;
+    transition:.15s filter;
+  }
+  .link-btn:hover{filter:brightness(1.08);}
+  .link-btn.ghost{background:transparent; color:var(--dc) !important; border:1.3px solid var(--dc);}
+  .link-row{display:flex; flex-wrap:wrap; gap:8px;}
+
+  .role-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-top:14px;}
+  .role-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:9px;
+  }
+  .role-card h3{
+    font-size:13.5px; margin:0; font-weight:700; color:var(--purple);
+    display:flex; align-items:center; gap:6px;
+  }
+  .role-card h3::before{content:"◆"; font-size:9px;}
+  .role-card ul{margin:0; padding-inline-start:18px; display:flex; flex-direction:column; gap:5px;}
+  .role-card ul li{font-size:12.5px; color:var(--text-dim); line-height:1.55;}
+  .role-card ul li b{color:var(--text);}
+
+  .task-box{
+    background:var(--surface-2); border:1px dashed var(--border); border-radius:12px;
+    padding:14px 16px; margin-top:2px;
+  }
+  .task-box .goal{font-size:12.5px; color:var(--text-dim); margin:0 0 10px;}
+  .task-box .goal b{color:var(--purple-ink);}
+  ol.scen{margin:0; padding-inline-start:20px; display:flex; flex-direction:column; gap:9px;}
+  ol.scen li{font-size:13.5px;}
+  ol.scen .ans{display:block; font-size:12px; color:var(--teal-ink); margin-top:2px;}
+
+  .review-note{
+    display:flex; align-items:flex-start; gap:8px; font-size:12.5px; color:var(--text-dim);
+    background:var(--neutral-tint); border-radius:10px; padding:9px 12px;
+  }
+
+  .quiz-box{
+    background:var(--amber-tint); border-radius:12px; padding:14px 16px;
+  }
+  .quiz-box ol{margin:0; padding-inline-start:20px; display:flex; flex-direction:column; gap:7px;}
+  .quiz-box li{font-size:13.5px; color:var(--amber-ink);}
+
+  .oral-box ul{margin:0; padding-inline-start:20px; display:flex; flex-direction:column; gap:7px;}
+  .oral-box li{font-size:13.5px;}
+
+  .no-test{
+    display:flex; align-items:center; gap:10px; color:var(--text-dim); font-size:13px;
+  }
+  .no-test .ic{font-size:18px;}
+
+  footer{
+    text-align:center; font-size:11.5px; color:var(--text-faint);
+    padding:26px 16px 10px; line-height:1.9;
+  }
+
+  @media (max-width:720px){
+    .day-tabs{gap:6px;}
+    .day-tab{padding:9px 4px;}
+    .day-tab .lbl{display:none;}
+    .masthead{padding:26px 20px;}
+    .masthead h1{font-size:21px;}
+  }
+  @media (max-width:480px){
+    .legend-row{column-count:1;}
+  }
+
+  .task-head{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;}
+  .task-code{font-family:'IBM Plex Mono',monospace; direction:ltr; unicode-bidi:isolate; font-size:11.5px; font-weight:600; background:var(--purple-tint); color:var(--purple-ink); padding:2px 9px; border-radius:99px;}
+  .task-title{font-size:13.5px; font-weight:700; color:var(--text);}
+  .task-stack{display:flex; flex-direction:column; gap:10px;}
+  .ph{display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--text-faint); border:1.3px dashed var(--border); border-radius:10px; padding:6px 12px; margin-top:8px; width:fit-content;}
+  .path{display:flex; flex-wrap:wrap; align-items:center; gap:5px; font-size:11.5px; color:var(--text-dim); background:var(--surface-2); border:1px solid var(--border); border-radius:9px; padding:6px 10px; margin:2px 0 8px; width:fit-content; max-width:100%;}
+  .path b{color:var(--teal-ink); font-weight:700;}
+  .fixed-task{background:var(--teal-tint); border:1px solid transparent; border-radius:12px; padding:12px 16px;}
+  .fixed-task .task-code{background:var(--teal); color:#fff;}
+  .res-table-wrap{overflow-x:auto;}
+  table.res{width:100%; border-collapse:collapse; font-size:12.5px; min-width:520px;}
+  table.res th{text-align:start; font-weight:700; color:var(--text-dim); padding:8px 10px; border-bottom:1.5px solid var(--border); font-size:11.5px;}
+  table.res td{padding:8px 10px; border-bottom:1px solid var(--border); vertical-align:top;}
+  table.res td a{color:var(--teal-ink); font-weight:600; text-decoration:none;}
+  table.res td a:hover{text-decoration:underline;}
+  .day-chip{display:inline-block; font-family:'Cairo',sans-serif; font-weight:800; font-size:11.5px; color:#fff; background:var(--dc); border-radius:6px; padding:1px 8px; margin-inline-end:4px;}
+  .final-quiz{background:var(--amber-tint); border-radius:12px; padding:14px 16px; margin-top:4px;}
+  .final-quiz h4{margin:0 0 8px; font-size:13px; color:var(--amber-ink);}
+  .final-quiz ol{margin:0; padding-inline-start:20px; display:flex; flex-direction:column; gap:6px;}
+  .final-quiz li{font-size:13px; color:var(--amber-ink);}
+/* ===== Progress path ===== */
+  .pcard{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px 22px; margin-bottom:22px; box-shadow:var(--shadow);}
+  .pcard h2{font-size:17px; margin:0 0 4px; color:var(--text);}
+  .pcard .muted,.muted{color:var(--text-dim); font-size:13px; margin:0;}
+  .pcard.note{color:var(--text-dim); font-size:13.5px;}
+  .small{font-size:12px !important;}
+  .ptop{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  .pbig{font-family:'Cairo',sans-serif; font-weight:800; font-size:38px; line-height:1; color:var(--teal-ink); direction:ltr;}
+  .pbar{height:10px; background:var(--neutral-tint); border-radius:99px; overflow:hidden; margin:14px 0;}
+  .pbar i{display:block; height:100%; background:linear-gradient(90deg,var(--teal),var(--purple)); border-radius:99px; transition:width .4s;}
+  .ppills{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px;}
+  .ppill{border:1.5px solid var(--border); border-radius:12px; padding:8px 6px; text-align:center; display:flex; flex-direction:column; gap:1px; background:var(--surface-2);}
+  .ppill b{font-family:'Cairo',sans-serif; font-size:17px;}
+  .ppill span{font-size:11px; color:var(--text-dim);}
+  .ppill em{font-style:normal; font-size:11.5px; font-weight:700; color:var(--teal-ink); direction:ltr;}
+  .ppill.st-approved{border-color:var(--teal); background:var(--teal-tint);}
+  .ppill.st-submitted{border-color:var(--amber); background:var(--amber-tint);}
+  .ppill.st-locked{opacity:.55;}
+  .pmeta{display:flex; flex-wrap:wrap; gap:6px 18px; margin-top:12px; font-size:12.5px; color:var(--text-dim);}
+  .pmeta b{color:var(--text);}
+  .nameform{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .nameform input{flex:1 1 220px; min-width:0; font:inherit; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface-2); color:var(--text);}
+  .btn{font:700 13px 'Cairo',sans-serif; background:var(--teal); color:#fff; border:0; border-radius:10px; padding:10px 18px; cursor:pointer;}
+  .btn:hover{filter:brightness(1.08);}
+  .btn.ghost{background:transparent; color:var(--teal-ink); border:1.4px solid var(--teal);}
+  .btn:disabled{opacity:.45; cursor:not-allowed;}
+  .btn:focus-visible,.nameform input:focus-visible,.addq input:focus-visible,textarea:focus-visible,.sc input:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .chip{display:inline-block; font-size:11px; font-weight:700; padding:3px 10px; border-radius:99px; background:var(--neutral-tint); color:var(--text-dim);}
+  .chip.good{background:var(--teal-tint); color:var(--teal-ink);}
+  .chip.warn{background:var(--amber-tint); color:var(--amber-ink);}
+  .day-tab.locked{opacity:.55; cursor:not-allowed;}
+  .lockbox{background:var(--neutral-tint); border-radius:14px; padding:26px; text-align:center; color:var(--text-dim); font-weight:700;}
+  .daycheck{background:var(--surface); border:1.5px solid var(--dc); border-radius:16px; padding:18px 20px; margin-bottom:14px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:14px;}
+  .dchead{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .dchead h3{margin:0; font-size:16px; color:var(--dc);}
+  .csec{display:flex; flex-direction:column; gap:7px; padding-top:12px; border-top:1px dashed var(--border);}
+  .chead{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+  .chead b{font-size:13.5px;}
+  .pts{font-size:11.5px; color:var(--text-faint);}
+  .ck{display:flex; align-items:flex-start; gap:9px; font-size:13.5px; cursor:pointer;}
+  .ck input{margin-top:5px; width:16px; height:16px; accent-color:var(--teal); flex:none;}
+  .ck span{min-width:0; overflow-wrap:anywhere;}
+  .myqs{margin:0; padding-inline-start:20px; font-size:13.5px; display:flex; flex-direction:column; gap:5px;}
+  .x{background:none; border:0; color:var(--text-faint); font-size:17px; cursor:pointer; padding:0 6px;}
+  .addq{display:flex; gap:8px; flex-wrap:wrap;}
+  .addq input{flex:1 1 220px; min-width:0; font:inherit; padding:9px 12px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface-2); color:var(--text);}
+  .dcfoot{display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .subm{margin:0; font-weight:700; color:var(--amber-ink); background:var(--amber-tint); padding:8px 14px; border-radius:10px; font-size:13px;}
+  .result{display:flex; gap:18px; align-items:center; flex-wrap:wrap; background:var(--teal-tint); border-radius:12px; padding:12px 16px;}
+  .rbig{font-family:'Cairo',sans-serif; font-weight:800; font-size:34px; color:var(--teal-ink); direction:ltr; line-height:1;}
+  .rbig small{font-size:15px; font-weight:700; color:var(--text-dim);}
+  .rlist{display:flex; flex-wrap:wrap; gap:4px 16px; font-size:12.5px; color:var(--text-dim); min-width:0; flex:1 1 200px;}
+  .rnote{flex-basis:100%; margin:6px 0 0; font-size:13px; color:var(--text);}
+  .tscroll{overflow-x:auto; margin-top:12px;}
+  .ttable{width:100%; border-collapse:collapse; font-size:13px; min-width:480px;}
+  .ttable th{text-align:start; font-size:11.5px; color:var(--text-dim); padding:8px 10px; border-bottom:1.5px solid var(--border);}
+  .ttable td{padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:middle;}
+  .ttable tbody tr{cursor:pointer;}
+  .ttable tbody tr:hover,.ttable tr.sel{background:var(--teal-tint);}
+  .mini{display:inline-block; width:70px; height:7px; background:var(--neutral-tint); border-radius:99px; overflow:hidden; vertical-align:middle;}
+  .mini i{display:block; height:100%; background:var(--teal);}
+  .editor{margin-top:16px; display:flex; flex-direction:column; gap:12px;}
+  .editor h3{margin:0; font-size:15px; color:var(--purple);}
+  .eday{border:1px solid var(--border); border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:9px; background:var(--surface-2);}
+  .eday.ok{border-color:var(--teal);}
+  .ehead{display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;}
+  .qs ol{margin:4px 0 0; padding-inline-start:20px; font-size:13px;}
+  .scgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:8px;}
+  .sc{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--text-dim);}
+  .sc em{font-style:normal; color:var(--text-faint);}
+  .sc small{color:var(--amber-ink); font-weight:700;}
+  .sc input{font:inherit; padding:7px 10px; border:1.5px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); width:100%; min-width:0;}
+  .nt{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--text-dim);}
+  textarea{font:inherit; padding:8px 10px; border:1.5px solid var(--border); border-radius:8px; background:var(--surface); color:var(--text); width:100%; resize:vertical;}
+  .eact{display:flex; gap:8px; flex-wrap:wrap;}
+  .toast{position:fixed; left:50%; bottom:78px; transform:translate(-50%,12px); background:#211c2b; color:#fff; font-size:13px; padding:9px 18px; border-radius:99px; opacity:0; pointer-events:none; transition:.2s; z-index:70; max-width:90vw; text-align:center;}
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+  @media (max-width:520px){ .ppills{gap:5px;} .ppill span{font-size:9.5px;} .pbig{font-size:30px;} }
+
+  #adminBar{margin:18px 0 0; text-align:center}
+  #adminBar .nameform{justify-content:center}
+  .code{font-family:ui-monospace,Menlo,monospace; font-weight:700; letter-spacing:.08em; background:var(--neutral-tint); padding:2px 8px; border-radius:6px;}
+  .vbox{margin-top:12px; display:flex; flex-direction:column; gap:10px;}
+  .vbox.wait{background:var(--neutral-tint); border-radius:12px; padding:18px; text-align:center; color:var(--text-dim); font-weight:700;}
+  .vframe{position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:12px; overflow:hidden;}
+  .vframe iframe{position:absolute; inset:0; width:100%; height:100%; border:0;}
+  .vprog{height:8px; background:var(--neutral-tint); border-radius:99px; overflow:hidden;}
+  .vprog i{display:block; height:100%; background:linear-gradient(90deg,var(--teal),var(--purple)); transition:width .5s;}
+  .vform label{display:block; font-size:13px; font-weight:700; margin-bottom:6px;}
+  .vform .nameform{margin-top:0;}
+  .vform input{flex:1 1 220px; min-width:0; font:inherit; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--surface-2); color:var(--text);}
+  .vform input:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .lockedblock{opacity:.6;}
+  .rewatch{margin-top:12px;} .rewatch summary{cursor:pointer; font-weight:700; color:var(--teal-ink); font-size:13px;}
+  .rewatch .vframe{margin-top:10px;}
+  .tcheck{margin-inline-start:auto;}
+  .task-head{flex-wrap:wrap;}
+  .srow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px;}
+  .srow>span:first-child{flex:1 1 200px; min-width:0;}
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <span class="eyebrow">CSM · Rewaa · Training Track</span>
+    <h1 data-en="Customer Success Manager (CSM) Training Program">برنامج تدريب موظف نجاح العملاء</h1>
+    <p data-en="A five-working-day training plan built on the Customer Success Portal, progressing from an introduction to the company, the CSM’s role, and the work tools, to the activation stages, then reactivation and case management, then financial services, support programs, commitment and quality, and ending with a full-day simulation of the account manager’s work. In each session, the trainee learns the content of the knowledge source, how to reach it from the portal, and how to use it with the customer.">خطة تدريبية مدتها خمسة أيام عمل مبنية على بوابة نجاح العملاء، تتدرّج من التعريف بالشركة ودور الموظف وأدوات العمل، إلى مراحل التفعيل، فإعادة التفعيل وإدارة الحالات، فالخدمات المالية وبرامج الدعم والالتزام والجودة، وتنتهي بيوم محاكاة كاملة لعمل مدير الحساب. يتعلّم المتدرب في كل جلسة مضمون المصدر المعرفي، وكيفية الوصول إليه من البوابة، وكيفية استخدامه مع العميل.</p>
+    <div class="stat-row" id="stats"></div>
+  </div>
+
+  <div id="progress"></div>
+
+  <div class="legend">
+    <h2 data-en="The Fixed Daily Training Structure">هيكل اليوم التدريبي الثابت</h2>
+    <div class="legend-row">
+      <div class="legend-item"><span class="legend-time">09:00</span><span class="legend-dot" style="background:var(--amber)"></span><span data-en="Quiz (from Day 2)">اختبار (من اليوم الثاني)</span></div>
+      <div class="legend-item"><span class="legend-time">09:30</span><span class="legend-dot" style="background:var(--teal)"></span><span data-en="First training session">الجلسة التدريبية الأولى</span></div>
+      <div class="legend-item"><span class="legend-time">11:00</span><span class="legend-dot" style="background:var(--purple)"></span><span data-en="Lunch/prayer break + review + tasks">استراحة الظهر/الصلاة + مراجعة + تاسكات</span></div>
+      <div class="legend-item"><span class="legend-time">13:30</span><span class="legend-dot" style="background:var(--teal)"></span><span data-en="Second training session">الجلسة التدريبية الثانية</span></div>
+      <div class="legend-item"><span class="legend-time">15:00</span><span class="legend-dot" style="background:#9c96a8"></span><span data-en="Break">استراحة</span></div>
+      <div class="legend-item"><span class="legend-time">16:00</span><span class="legend-dot" style="background:var(--purple)"></span><span data-en="Tasks + the fixed task: attending the webinar">تاسكات + التاسك الثابت: حضور الويبينار</span></div>
+      <div class="legend-item"><span class="legend-time">17:00</span><span class="legend-dot" style="background:var(--amber)"></span><span data-en="Third training session (closing): review + oral quiz + questions">الجلسة التدريبية الثالثة (الختامية): مراجعة + شفهي + أسئلة</span></div>
+    </div>
+  </div>
+
+  <div id="tabsAnchor"></div>
+  <nav class="day-tabs" id="dayTabs"></nav>
+  <main id="dayPanels"></main>
+
+  <div class="link-row" style="margin-top:22px;justify-content:center">
+      <a class="link-btn" style="--dc:var(--purple)" href="https://fyousef-2023.github.io/CSM-PORTAL/" target="_blank" rel="noopener">🔗 <span data-en="Customer Success Portal">بوابة نجاح العملاء</span></a>
+    </div>
+
+  <div id="adminBar"></div>
+  <footer>
+    <span data-en="Prepared by: Quality Department — Customer Success Team &nbsp;|&nbsp; Rewaa<br>A training reference built on the Customer Success Portal — Version 2.0">إعداد: قسم الجودة — فريق نجاح العملاء &nbsp;|&nbsp; رِواء<br>
+    مرجع تدريبي مبني على بوابة نجاح العملاء — النسخة 2.0</span>
+  </footer>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+<button type="button" id="langBtn" class="lang-btn" aria-label="Switch to English"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19"/><path d="M12 2.5c2.6 2.7 4 5.9 4 9.5s-1.4 6.8-4 9.5c-2.6-2.7-4-5.9-4-9.5s1.4-6.8 4-9.5z"/></svg><span id="langTxt">EN</span></button>
+
+<script>
+const EN = {"مراجعة ونقاش، ثم اختبار شفهي، ثم الإجابة عن الأسئلة والاستفسارات الناتجة عن تطبيق الويبينار أو محتوى اليوم. أسئلة مقترحة للاختبار الشفهي:": "Review and discussion, then an oral quiz, then answering the questions and inquiries arising from the webinar application or the day's content. Suggested oral quiz questions:", "حُفظ": "Saved", "حذف المتدرب": "Remove trainee", "أيام تدريب": "Training Days", "تسجيل هذه الجلسة غير متاح بعد. سيُضاف قريباً.": "This session's recording is not available yet. It will be added soon.", "الحالة": "Status", "تم اعتماد اليوم": "Day approved", "استراحة + مراجعة + تاسكات": "Break + Review + Tasks", "استراحة": "Break", "بعد التحقق تُفتح مادة الجلسة.": "The session material unlocks after verification.", "تم الإرسال": "Submitted", "اليوم": "Day", "تقدّمك في البرنامج": "Your progress in the program", "مراجعة مادة الجلسات": "Reviewing session material", "الاختبار": "Quiz", "مفتوح": "Open", "افتح اليوم يدوياً": "Open day manually", "حضور الجلسات": "Session attendance", "رمز الأدمن": "Admin PIN", "اختبارات شفهية": "Oral Quizzes", "اختبار": "Quiz", "لوحة الأدمن": "Admin Panel", "كل يوم معتمد يضيف 20% من البرنامج": "Each approved day adds 20% of the program", "إرسال اليوم للاعتماد": "Submit the day for approval", "يُحتسب فقط أثناء ظهور هذه الصفحة، والتسريع أو التقديم لا يختصر الوقت.": "Counted only while this page is visible; speeding up or skipping does not shorten the time.", "تم الإرسال — بانتظار اعتماد المدرب": "Submitted — awaiting trainer approval", "لم تتم": "Not done", "البوابة": "Portal", "رمز غير صحيح": "Incorrect code", "تم": "Done", "رابط الاختبار الختامي — يُضاف لاحقاً": "Final quiz link — to be added later", "اكتب سؤالاً أو مشاركة": "Write a question or contribution", "وقت المشاهدة": "Watch time", "مغلق حتى يعتمد المدرب اليوم السابق": "Locked until the trainer approves the previous day", "تم تطبيقه": "Applied", "الاختبار الختامي الشامل": "Comprehensive Final Quiz", "محاولات كثيرة، انتظر دقيقة": "Too many attempts, wait a minute", "تاسكات + وقت حر": "Tasks + Free Time", "لا يوجد متدربون بعد": "No trainees yet", "الاسم": "Name", "أسئلة المتدرب": "Trainee questions", "كل الأيام مفتوحة لك. أضف متدرباً ليصلك رمز دخوله، واضغط على متدرب لتقييمه.": "All days are open to you. Add a trainee to get their access code, and select a trainee to review them.", "أدخل كلمة التحقق التي وردت في التسجيل لفتح مادة الجلسة": "Enter the check word mentioned in the recording to unlock the session material", "رابط الاختبار — يُضاف لاحقاً": "Quiz link — to be added later", "اختبارات": "Quizzes", "اسم المتدرب": "Trainee name", "اضغط مرة أخرى للتأكيد": "Press again to confirm", "ألغِ إنهاء الجلسة": "Undo session completion", "المسار": "Path", "تأكيد": "Confirm", "تعذّر الاتصال بالخادم": "Could not reach the server", "معدّل العلامات": "Average mark", "مسار اليوم": "Day Path", "حُذف": "Removed", "تمت": "Done", "اعتمد الجلسة يدوياً": "Mark session done manually", "خروج الأدمن": "Admin sign-out", "وقت المشاهدة المحتسب": "Counted watch time", "ألغِ الاعتماد": "Revoke approval", "حذف": "Remove", "أغلق اليوم يدوياً": "Close day manually", "الجلسات المنجزة": "Sessions completed", "تطبيق التاسكات": "Applying the tasks", "تظهر خانة كلمة التحقق بعد اكتمال وقت المشاهدة.": "The check-word field appears once the viewing time is complete.", "الكلمة غير صحيحة": "Incorrect word", "معتمد": "Approved", "إضافة متدرب": "Add trainee", "إضافة": "Add", "أنهِ كل أجزاء اليوم بالترتيب لتفعيل الإرسال": "Finish every part of the day, in order, to enable submitting", "تاسكاً (منها الويبينار يومياً)": "Tasks (including the daily webinar)", "التقدم": "Progress", "جلسة تدريبية": "Training Sessions", "جارٍ التحميل…": "Loading…", "مقفل": "Locked", "إعادة مشاهدة التسجيل": "Watch the recording again", "تسجيل الخروج": "Sign out", "ملاحظة المدرب": "Trainer note", "رابط التاسك — يُضاف لاحقاً": "Task link — to be added later", "تعذّر الوصول إلى الخادم الآن. حاول لاحقاً.": "Could not reach the server right now. Please try again later.", "أُلغي الاعتماد": "Approval revoked", "رمز الدخول": "Access code", "دخول": "Sign in", "تعذّر الحفظ": "Could not save", "ثابت": "Fixed", "المشاركة وطرح الأسئلة": "Participation and questions", "بانتظار الاعتماد": "Awaiting approval", "أنهيت الاختبار": "I finished the quiz", "التفاصيل": "Details", "أدخل رمز الدخول الذي أعطاك إياه المدرب. يُفتح اليوم الأول، ويُفتح كل جزء بعد إنهاء الذي قبله.": "Enter the access code your trainer gave you. Day 1 is open, and each part opens once you finish the one before it.", "الأيام المعتمدة": "Approved days", "دخول الأدمن": "Admin sign-in", "قيد العمل": "In progress", "اعتمد اليوم": "Approve day", "المطلوب": "Required", "المعدل": "Average", "يُفتح بعد إنهاء الجزء السابق.": "Opens after you finish the previous part.", "تم فتح مادة الجلسة": "Session material unlocked", "نقطة": "pts", "تاسك": "Task", "لم يُضبط رابط الخادم بعد. اتبع خطوات الإعداد ثم ضع الرابط في الصفحة.": "The server URL is not set yet. Follow the setup steps, then paste the URL into the page.", "يُقيَّم من المدرب": "Graded by the trainer", "احفظ التقييم": "Save review", "مرحباً بك في مسار التدريب": "Welcome to the Training Path", "الجلسة الثالثة — ختامية + شفهي": "Third Session — Closing + Oral Quiz", "لا أسئلة": "No questions", "مقترح": "suggested"};
+let LANG = 'ar';
+try{ if(localStorage.getItem('csmLang')==='en') LANG='en'; }catch(e){}
+const T = s => {
+  if(LANG!=='en' || s==null) return s;
+  const v = EN[s];
+  return (v===undefined ? s : v).replace(/←/g,'→');
+};
+const ARW = () => LANG==='en' ? '→' : '←';
+let ACTIVE = 0;
+
+const linkBtns = (arr, style='') => arr && arr.length
+  ? `<div class="link-row" ${style}>${arr.map(l=>`<a class="link-btn" href="${l.url}" target="_blank" rel="noopener">🔗 ${T(l.label)}</a>`).join('')}</div>` : '';
+
+const pathOf = l => `<div class="path">📍 <b>${T('المسار')}:</b> ${[T('البوابة'), ...l.path.map(T), T(l.label)].join(` ${ARW()} `)}</div>`;
+
+function renderPart(p){
+  const links = p.links || [];
+  return `<div class="part">
+    <h4>${T(p.h)}</h4>
+    <ul class="pts">${p.items.map(i=>`<li>${T(i)}</li>`).join('')}</ul>
+    ${links.filter(l=>!l.portal).map(pathOf).join('')}
+    ${linkBtns(links)}
+  </div>`;
+}
+
+function renderTask(t,tk){
+  const items = t.items && t.items.length ? `<ol class="scen">${t.items.map(i=>`<li>${T(i)}</li>`).join('')}</ol>` : '';
+  const foot = (t.links && t.links.length) ? linkBtns(t.links,'style="margin-top:8px"') : `<span class="ph">🔗 ${T('رابط التاسك — يُضاف لاحقاً')}</span>`;
+  return `<div class="task-box ${t.fixed?'fixed-task':''}">
+    <div class="task-head"><span class="task-code">${t.code==='ثابت'?T('ثابت'):T('تاسك')+' '+t.code}</span><span class="task-title">${T(t.title)}</span>${tk?`<label class="ck tcheck"><input type="checkbox" data-act="tick" data-key="${tk.key}" ${tk.on?'checked':''} ${tk.dis?'disabled':''}><span>${T('تم تطبيقه')}</span></label>`:''}</div>
+    <p class="goal"><b>${T('المطلوب')}:</b> ${T(t.goal)}</p>
+    ${items}${t.details?`<p class="goal" style="margin-top:10px"><b>${T(t.dlabel||'التفاصيل')}:</b> ${T(t.details)}</p>`:''}${foot}
+  </div>`;
+}
+
+function renderBlock(b, d, ctx){
+  if(b.type==='quiz'){
+    return `<div class="block" style="--block-c:var(--amber)">
+      <div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind" style="--chip-bg:var(--amber-tint);--chip-c:var(--amber-ink)">📝 ${T('اختبار')}</span></div>
+      <h3>${T(b.title)}</h3><p class="lead">${T(b.note)}</p>
+      <div class="quiz-box"><ol>${b.questions.map(q=>`<li>${T(q)}</li>`).join('')}</ol></div>
+      ${b.links&&b.links.length?linkBtns(b.links,'style="margin-top:8px"'):`<span class="ph">🔗 ${T('رابط الاختبار — يُضاف لاحقاً')}</span>`}
+    </div>`;
+  }
+  if(b.type==='session'){
+    return `<div class="block" style="--block-c:var(${d.c})">
+      <div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind" style="--chip-bg:var(${d.t});--chip-c:var(${d.c})">🎓 ${T('جلسة تدريبية')}</span></div>
+      <h3>${T(b.title)}</h3><p class="lead">${T(b.subtitle)}</p>
+      ${b.parts.map(renderPart).join('')}
+    </div>`;
+  }
+  if(b.type==='break-task' || b.type==='task-free'){
+    const kind = b.type==='break-task' ? '🍽️ '+T('استراحة + مراجعة + تاسكات') : '✍️ '+T('تاسكات + وقت حر');
+    return `<div class="block" style="--block-c:var(--purple)">
+      <div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind" style="--chip-bg:var(--purple-tint);--chip-c:var(--purple-ink)">${kind}</span></div>
+      <h3>${T(b.title)}</h3>
+      ${b.review?`<div class="review-note">🗒️ ${T(b.review)}</div>`:''}
+      <div class="task-stack">${b.tasks.map((t,n)=>renderTask(t, ctx?{key:'d'+d.num+'_t'+((b._tb||0)+n), on:!!(ctx.ticks||{})['d'+d.num+'_t'+((b._tb||0)+n)], dis:ctx.dis}:null)).join('')}</div>
+    </div>`;
+  }
+  if(b.type==='break'){
+    return `<div class="block" style="--block-c:#9c96a8">
+      <div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind">☕ ${T('استراحة')}</span></div>
+      <h3>${T(b.title)}</h3>
+    </div>`;
+  }
+  if(b.type==='closing'){
+    const parts = b.parts ? b.parts.map(renderPart).join('') : '';
+    const fq = b.finalQuiz ? `<div class="final-quiz"><h4>📝 ${T('الاختبار الختامي الشامل')}</h4><ol>${b.finalQuiz.map(q=>`<li>${T(q)}</li>`).join('')}</ol>${b.finalLinks&&b.finalLinks.length?linkBtns(b.finalLinks,'style="margin-top:8px"'):`<span class="ph">🔗 ${T('رابط الاختبار الختامي — يُضاف لاحقاً')}</span>`}</div>` : '';
+    return `<div class="block" style="--block-c:var(${d.c})">
+      <div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind" style="--chip-bg:var(${d.t});--chip-c:var(${d.c})">🏁 ${T('الجلسة الثالثة — ختامية + شفهي')}</span></div>
+      <h3>${T(b.title)}</h3>
+      ${parts}${fq}
+      <div class="oral-box">
+        <p class="lead">${T('مراجعة ونقاش، ثم اختبار شفهي، ثم الإجابة عن الأسئلة والاستفسارات الناتجة عن تطبيق الويبينار أو محتوى اليوم. أسئلة مقترحة للاختبار الشفهي:')}</p>
+        <ul>${b.oral.map(q=>`<li>${T(q)}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }
+  return '';
+}
+
+function applyStatic(){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    if(el.dataset.ar===undefined) el.dataset.ar = el.innerHTML;
+    el.innerHTML = LANG==='en' ? el.dataset.en : el.dataset.ar;
+  });
+  document.body.classList.toggle('en', LANG==='en');
+  document.documentElement.lang = LANG;
+  const tt = document.querySelector('title');
+  if(tt){
+    if(tt.dataset.ar===undefined) tt.dataset.ar = tt.textContent;
+    document.title = LANG==='en' ? tt.dataset.en : tt.dataset.ar;
+  }
+  const txt = document.getElementById('langTxt');
+  if(txt) txt.textContent = LANG==='en' ? 'عربي' : 'EN';
+  const btn = document.getElementById('langBtn');
+  if(btn) btn.setAttribute('aria-label', LANG==='en' ? 'التبديل إلى العربية' : 'Switch to English');
+}
+
+const API_URL='https://script.google.com/macros/s/AKfycbyC4IkQFKZkIGWsB28WC0ge0dJw0Vlv2rasL9B223KSFRasuZR_fwfFQYO6PBfxF212ZQ/exec';
+const STATS=[[5,'أيام تدريب'],[15,'جلسة تدريبية'],[26,'تاسكاً (منها الويبينار يومياً)'],[7,'اختبارات'],[5,'اختبارات شفهية']];
+const MAXP = n => n===1 ? {att:25,rev:25,tasks:25,part:25} : {att:20,rev:20,tasks:20,part:20,quiz:20};
+const CRIT = [['att','حضور الجلسات'],['rev','مراجعة مادة الجلسات'],['tasks','تطبيق التاسكات'],['part','المشاركة وطرح الأسئلة'],['quiz','الاختبار']];
+const STATE_LBL = {approved:'معتمد', locked:'مقفل', submitted:'بانتظار الاعتماد', open:'مفتوح'};
+const dk = d => 'd'+d.num;
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mmss = s => { s=Math.max(0,Math.round(s)); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); };
+
+let CODE=null, PIN=null, ADMIN=false, VIEW=null, AC=null, LOAD='loading', SEL=null, INIT_TAB=false;
+let TRAINEES={}, REVIEWS={}, WQ=Promise.resolve(), TOASTT=null, PENDING=false, NEWCODE=null;
+
+const days = () => ADMIN ? ((AC&&AC.days)||[]) : ((VIEW&&VIEW.days)||[]);
+const revDay = (rv,d) => (rv&&rv.days&&rv.days[dk(d)])||null;
+const isApproved = (rv,d) => { const r=revDay(rv,d); return !!(r&&r.approved); };
+const dayTotal = r => (r&&r.scores) ? Object.values(r.scores).reduce((a,b)=>a+(+b||0),0) : 0;
+function progressOf(rv,n0){
+  let n=0,sum=0; const N=n0||5;
+  for(let i=1;i<=N;i++){ const r=rv&&rv.days&&rv.days['d'+i]; if(r&&r.approved){ n++; sum+=dayTotal(r); } }
+  return {n, pct:Math.round(n*100/N), avg:n?Math.round(sum/n):0};
+}
+function toast(m){
+  const el=document.getElementById('toast'); if(!el) return;
+  el.textContent=m; el.classList.add('show'); clearTimeout(TOASTT);
+  TOASTT=setTimeout(()=>el.classList.remove('show'),2600);
+}
+async function API(action,payload){
+  if(!/^https:/.test(API_URL)) throw new Error('nourl');
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action},payload||{}))});
+  const j=await r.json(); if(!j.ok){ const e=new Error(j.error||'err'); e.code=j.error; throw e; } return j;
+}
+function enqueue(fn,okMsg){
+  WQ = WQ.then(fn).then(()=>{ if(okMsg) toast(T(okMsg)); }).catch(e=>{
+    if(e&&e.code==='bad_pin'){ adminOut(); return; }
+    toast(T(e&&e.code==='wait'?'محاولات كثيرة، انتظر دقيقة':(e&&e.code==='wrong'?'الكلمة غير صحيحة':'تعذّر الحفظ')));
+    if(!ADMIN&&CODE) API('view',{code:CODE}).then(setView).catch(()=>{});
+  });
+  return WQ;
+}
+function setView(v){ VIEW=v; if(v.en) Object.assign(EN,v.en); LOAD='ready'; if(!INIT_TAB){ INIT_TAB=true; initTab(); } refresh(); }
+function initTab(){ let t=0; days().forEach((d,i)=>{ if(d.open) t=i; }); ACTIVE=t; }
+const isOpen = i => ADMIN || !!(days()[i]&&days()[i].open);
+const stateOfDay = d => d.approved ? 'approved' : (!d.open ? 'locked' : (d.submitted ? 'submitted' : 'open'));
+
+/* ---------- login / progress cards ---------- */
+function loginHTML(){
+  return `<div class="pcard"><h2>${T('مرحباً بك في مسار التدريب')}</h2>
+    <p class="muted">${T('أدخل رمز الدخول الذي أعطاك إياه المدرب. يُفتح اليوم الأول، ويُفتح كل جزء بعد إنهاء الذي قبله.')}</p>
+    <form class="nameform" id="loginForm"><input id="codeInput" type="text" maxlength="12" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="${T('رمز الدخول')}" dir="ltr" required><button class="btn" type="submit">${T('دخول')}</button></form></div>`;
+}
+function traineeProgressHTML(){
+  const ds=days(), p=progressOf(VIEW.review,ds.length);
+  const pills=ds.map(d=>{
+    const st=stateOfDay(d), r=revDay(VIEW.review,d);
+    return `<div class="ppill st-${st}"><b>${d.num}</b><span>${T(STATE_LBL[st])}</span>${st==='approved'?`<em>${dayTotal(r)}/100</em>`:''}</div>`;
+  }).join('');
+  return `<div class="pcard"><div class="ptop"><div><h2>${T('تقدّمك في البرنامج')}</h2><p class="muted">${esc(VIEW.name||'')}</p></div><div class="pbig">${p.pct}%</div></div>
+    <div class="pbar"><i style="width:${p.pct}%"></i></div><div class="ppills">${pills}</div>
+    <div class="pmeta"><span>${T('الأيام المعتمدة')}: <b>${p.n}/${ds.length}</b></span><span>${T('معدّل العلامات')}: <b>${p.n?p.avg+'/100':'—'}</b></span><span>${T('كل يوم معتمد يضيف 20% من البرنامج')}</span></div>
+    <div class="pmeta"><button class="btn ghost" type="button" data-act="logout">${T('تسجيل الخروج')}</button></div></div>`;
+}
+
+/* ---------- admin ---------- */
+function evidence(d,t){
+  const ses=d.blocks.filter(b=>b.type==='session'||b.type==='closing'); const dn=(t&&t.done)||{}, tk=(t&&t.ticks)||{};
+  let tt=0,tc=0; d.blocks.forEach(b=>{ tt+=(b.tasks||[]).length; });
+  for(let i=0;i<tt;i++) if(tk['d'+d.num+'_t'+i]) tc++;
+  return {ses, sd:ses.filter(b=>dn[b.key]).length, tt, tc};
+}
+function suggest(d,t){
+  const e=evidence(d,t), mx=MAXP(d.num), f=(a,b,m)=>b?Math.round(m*a/b):0;
+  const o={att:f(e.sd,e.ses.length,mx.att), rev:f(e.sd,e.ses.length,mx.rev), tasks:f(e.tc,e.tt,mx.tasks), part:0};
+  if(mx.quiz) o.quiz=0; return o;
+}
+function adminHTML(){
+  const ids=Object.keys(TRAINEES).sort((a,b)=>String(TRAINEES[a].name||'').localeCompare(String(TRAINEES[b].name||'')));
+  const N=days().length||5;
+  let rows=ids.map(id=>{
+    const t=TRAINEES[id], rv=REVIEWS[id]||null, p=progressOf(rv,N);
+    const pend=days().filter(d=>t.submitted&&t.submitted[dk(d)]&&!isApproved(rv,d)).length;
+    return `<tr class="${SEL===id?'sel':''}" data-act="sel" data-uid="${esc(id)}"><td>${esc(t.name||'—')}</td><td dir="ltr"><code class="code">${esc(id)}</code></td><td><div class="mini"><i style="width:${p.pct}%"></i></div> ${p.pct}%</td><td>${p.n?p.avg+'/100':'—'}</td><td>${pend?`<span class="chip warn">${T('بانتظار الاعتماد')}: ${pend}</span>`:'—'}</td></tr>`;
+  }).join('');
+  if(!rows) rows=`<tr><td colspan="5" class="muted">${T('لا يوجد متدربون بعد')}</td></tr>`;
+  return `<div class="pcard admin"><div class="ptop"><div><h2>${T('لوحة الأدمن')}</h2><p class="muted">${T('كل الأيام مفتوحة لك. أضف متدرباً ليصلك رمز دخوله، واضغط على متدرب لتقييمه.')}</p></div></div>
+    <form class="nameform" id="addForm"><input id="addName" type="text" maxlength="60" placeholder="${T('اسم المتدرب')}" required><button class="btn" type="submit">${T('إضافة متدرب')}</button></form>
+    ${NEWCODE?`<p class="subm">${esc(NEWCODE.name)} — ${T('رمز الدخول')}: <b dir="ltr" class="code">${esc(NEWCODE.code)}</b></p>`:''}
+    <div class="tscroll"><table class="ttable"><thead><tr><th>${T('الاسم')}</th><th>${T('رمز الدخول')}</th><th>${T('التقدم')}</th><th>${T('المعدل')}</th><th>${T('الحالة')}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${SEL&&TRAINEES[SEL]?editorHTML(SEL):''}</div>`;
+}
+function editorHTML(id){
+  const t=TRAINEES[id], rv=REVIEWS[id]||null;
+  const dys=days().map((d,i)=>{
+    const k=dk(d), r=revDay(rv,d), e=evidence(d,t), mx=MAXP(d.num), sg=suggest(d,t);
+    const sc=(r&&r.scores)||null, ap=!!(r&&r.approved), forced=!!(rv&&rv.open&&rv.open[k]);
+    const qs=(t.questions&&t.questions[k])||[];
+    const inputs=CRIT.filter(([c2])=>mx[c2]!=null).map(([c2,lbl])=>{
+      const val = sc&&sc[c2]!=null ? sc[c2] : sg[c2];
+      return `<label class="sc"><span>${T(lbl)} <em>/${mx[c2]}</em>${!sc&&c2!=='part'&&c2!=='quiz'?` <small>${T('مقترح')}</small>`:''}</span><input type="number" min="0" max="${mx[c2]}" step="1" id="sc_${k}_${c2}" value="${val}"></label>`;
+    }).join('');
+    const sess=e.ses.map(b=>{
+      const dn=!!(t.done&&t.done[b.key]), a=(t.vid&&t.vid[b.key]&&t.vid[b.key].a)||0;
+      return `<div class="srow"><span>${T(b.title)} <span class="mono">${b.time}</span></span><span class="muted small">${T('وقت المشاهدة')}: ${mmss(a)}${b._min?' / '+mmss(b._min*60*0.75):''}</span><button class="btn ghost" data-act="blockdone" data-bk="${b.key}" data-val="${dn?0:1}">${dn?T('ألغِ إنهاء الجلسة'):T('اعتمد الجلسة يدوياً')}</button><span class="chip ${dn?'good':''}">${dn?T('تمت'):T('لم تتم')}</span></div>`;
+    }).join('');
+    return `<div class="eday ${ap?'ok':''}"><div class="ehead"><b>${T('اليوم')} ${d.num}</b><span class="chip ${ap?'good':(t.submitted&&t.submitted[k]?'warn':'')}">${ap?T('معتمد')+' · '+dayTotal(r)+'/100':(t.submitted&&t.submitted[k]?T('بانتظار الاعتماد'):T('قيد العمل'))}</span></div>
+      ${sess}
+      <p class="muted small">${T('الجلسات المنجزة')}: ${e.sd}/${e.ses.length} · ${T('تطبيق التاسكات')}: ${e.tc}/${e.tt}</p>
+      <div class="qs"><b>${T('أسئلة المتدرب')}</b>${qs.length?`<ol>${qs.map(q=>`<li>${esc(q)}</li>`).join('')}</ol>`:`<span class="muted small"> ${T('لا أسئلة')}</span>`}</div>
+      <div class="scgrid">${inputs}</div>
+      <label class="nt"><span>${T('ملاحظة المدرب')}</span><textarea id="nt_${k}" rows="2" maxlength="600">${esc(r&&r.note||'')}</textarea></label>
+      <div class="eact"><button class="btn ghost" data-act="saverev" data-day="${i}">${T('احفظ التقييم')}</button>
+      ${ap?`<button class="btn ghost" data-act="revoke" data-day="${i}">${T('ألغِ الاعتماد')}</button>`:`<button class="btn" data-act="approve" data-day="${i}">${T('اعتمد اليوم')}</button>`}
+      ${i>0?`<button class="btn ghost" data-act="force" data-day="${i}">${forced?T('أغلق اليوم يدوياً'):T('افتح اليوم يدوياً')}</button>`:''}</div></div>`;
+  }).join('');
+  return `<div class="editor"><div class="ehead"><h3>${esc(t.name||'')}</h3><button class="btn ghost" data-act="rm" data-uid="${esc(id)}">${T('حذف المتدرب')}</button></div>${dys}</div>`;
+}
+
+/* ---------- trainee day UI ---------- */
+function videoHTML(b){
+  const v=b.video||{};
+  if(!v.avail) return `<div class="vbox wait">🎬 ${T('تسجيل هذه الجلسة غير متاح بعد. سيُضاف قريباً.')}</div>`;
+  const pct=Math.min(100,Math.round(v.active*100/v.need));
+  const form = v.ready
+    ? `<form class="vform" data-bk="${b.key}"><label>${T('أدخل كلمة التحقق التي وردت في التسجيل لفتح مادة الجلسة')}</label><div class="nameform"><input type="text" class="vword" maxlength="60" autocomplete="off" required><button class="btn" type="submit">${T('تأكيد')}</button></div></form>`
+    : `<p class="muted small">${T('تظهر خانة كلمة التحقق بعد اكتمال وقت المشاهدة.')}</p>`;
+  return `<div class="vbox"><div class="vframe"><iframe src="https://drive.google.com/file/d/${esc(v.id)}/preview" allow="autoplay; fullscreen" allowfullscreen loading="lazy" title="${esc(T(b.title))}"></iframe></div>
+    <div class="vprog"><i id="vp_${b.key}" style="width:${pct}%"></i></div>
+    <p class="muted small" id="vt_${b.key}">${T('وقت المشاهدة المحتسب')}: <b>${mmss(v.active)}</b> / ${mmss(v.need)} — ${T('يُحتسب فقط أثناء ظهور هذه الصفحة، والتسريع أو التقديم لا يختصر الوقت.')}</p>${form}</div>`;
+}
+function blockHeadHTML(b,d){
+  const kind = b.type==='closing' ? '🏁 '+T('الجلسة الثالثة — ختامية + شفهي') : '🎓 '+T('جلسة تدريبية');
+  return `<div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind" style="--chip-bg:var(${d.t});--chip-c:var(${d.c})">${kind}</span></div><h3>${T(b.title)}</h3>`;
+}
+function traineeBlockHTML(b,d){
+  const ctxOn = {ticks:VIEW.tr.ticks, dis:d.approved||d.submitted};
+  if(b.status==='locked'){
+    return `<div class="block lockedblock" style="--block-c:#9c96a8"><div class="block-top"><span class="block-time">${b.time}</span><span class="block-kind">🔒 ${T('مقفل')}</span></div><h3>${T(b.title)}</h3><p class="lead">${T('يُفتح بعد إنهاء الجزء السابق.')}</p></div>`;
+  }
+  const sess = b.type==='session'||b.type==='closing';
+  if(sess && b.status==='current'){
+    return `<div class="block" style="--block-c:var(${d.c})">${blockHeadHTML(b,d)}${videoHTML(b)}<p class="lead small">${T('بعد التحقق تُفتح مادة الجلسة.')}</p></div>`;
+  }
+  let html=renderBlock(b.full,d,ctxOn);
+  if(sess && b.status==='done' && b.video && b.video.avail){
+    html=html.replace(/<\/div>\s*$/,`<details class="rewatch"><summary>${T('إعادة مشاهدة التسجيل')}</summary><div class="vframe"><iframe src="https://drive.google.com/file/d/${esc(b.video.id)}/preview" allowfullscreen loading="lazy" title="${esc(T(b.title))}"></iframe></div></details></div>`);
+  }
+  if(b.type==='quiz' && b.status==='current'){
+    html=html.replace(/<\/div>\s*$/,`<div class="eact"><button class="btn" data-act="mark" data-bk="${b.key}">${T('أنهيت الاختبار')}</button></div></div>`);
+  }
+  return html;
+}
+function dayCheckHTML(d,i){
+  const k=dk(d), qs=(VIEW.tr.questions&&VIEW.tr.questions[k])||[], r=revDay(VIEW.review,d), ap=d.approved, sub=d.submitted, mx=MAXP(d.num);
+  const ses=d.blocks.filter(b=>b.type==='session'||b.type==='closing'), sd=ses.filter(b=>b.status==='done').length;
+  let tt=0,tc=0; d.blocks.forEach(b=>{ if(b.full&&b.full.tasks){ tt+=b.full.tasks.length; b.full.tasks.forEach((t,n)=>{ if(VIEW.tr.ticks['d'+d.num+'_t'+((b.full._tb||0)+n)]) tc++; }); } });
+  let allT=0; d.blocks.forEach(b=>{ allT+=(b.full&&b.full.tasks?b.full.tasks.length:0); });
+  const sec=(lbl,max,body,cnt)=>`<div class="csec"><div class="chead"><b>${T(lbl)}</b><span class="pts">${cnt?cnt+' · ':''}${max} ${T('نقطة')}</span></div>${body}</div>`;
+  const part=`<ol class="myqs">${qs.map((q,n)=>`<li>${esc(q)}${ap?'':` <button type="button" class="x" data-act="delq" data-day="${i}" data-n="${n}" aria-label="${T('حذف')}">×</button>`}</li>`).join('')}</ol>
+    ${ap?'':`<div class="addq"><input type="text" id="q_${k}" maxlength="300" placeholder="${T('اكتب سؤالاً أو مشاركة')}"><button type="button" class="btn ghost" data-act="addq" data-day="${i}">${T('إضافة')}</button></div>`}`;
+  let result='';
+  if(ap){
+    const sc=(r&&r.scores)||{};
+    result=`<div class="result"><div class="rbig">${dayTotal(r)}<small>/100</small></div><div class="rlist">${CRIT.filter(([c2])=>mx[c2]!=null).map(([c2,lbl])=>`<span>${T(lbl)}: <b>${sc[c2]!=null?sc[c2]:0}/${mx[c2]}</b></span>`).join('')}${r&&r.note?`<p class="rnote"><b>${T('ملاحظة المدرب')}:</b> ${esc(r.note)}</p>`:''}</div></div>`;
+  }
+  let foot='';
+  if(!ap){
+    foot = sub ? `<p class="subm">${T('تم الإرسال — بانتظار اعتماد المدرب')}</p>`
+      : `<button class="btn" data-act="submit" data-day="${i}" ${d.allDone?'':'disabled'}>${T('إرسال اليوم للاعتماد')}</button>${d.allDone?'':`<span class="muted small"> ${T('أنهِ كل أجزاء اليوم بالترتيب لتفعيل الإرسال')}</span>`}`;
+  }
+  return `<div class="daycheck"><div class="dchead"><h3>${T('مسار اليوم')} ${d.num}</h3><span class="chip ${ap?'good':(sub?'warn':'')}">${T(STATE_LBL[stateOfDay(d)])}</span></div>
+    ${result}
+    ${sec('الجلسات المنجزة',mx.att+mx.rev,'',sd+'/'+ses.length)}
+    ${sec('تطبيق التاسكات',mx.tasks,'',tc+'/'+allT)}
+    ${sec('المشاركة وطرح الأسئلة',mx.part,part)}
+    ${mx.quiz?sec('الاختبار',mx.quiz,`<p class="muted small">${ap?'':T('يُقيَّم من المدرب')}</p>`):''}
+    <div class="dcfoot">${foot}</div></div>`;
+}
+
+/* ---------- main render ---------- */
+function render(){
+  document.getElementById('stats').innerHTML = STATS.map(([n,l])=>`<div class="stat"><b>${n}</b><span>${T(l)}</span></div>`).join('');
+  renderProgress();
+  const ds=days(), show = (ADMIN&&ds.length) || (!ADMIN&&VIEW&&ds.length);
+  const tabsEl=document.getElementById('dayTabs'), panelsEl=document.getElementById('dayPanels');
+  tabsEl.hidden=!show; panelsEl.hidden=!show;
+  if(!show){ tabsEl.innerHTML=''; panelsEl.innerHTML=''; applyStatic(); return; }
+  if(ACTIVE>=ds.length || !isOpen(ACTIVE)) ACTIVE=0;
+  tabsEl.innerHTML = ds.map((d,i)=>{
+    const op=isOpen(i);
+    return `<button type="button" class="day-tab ${i===ACTIVE?'active':''} ${op?'':'locked'}" data-idx="${i}" ${op?'':'aria-disabled="true"'} style="--dc:var(${d.c});--dt:var(${d.t})"><span class="num">${d.num}${op?'':' 🔒'}</span><span class="lbl">${T(d.titleAr)}</span></button>`;
+  }).join('');
+  panelsEl.innerHTML = ds.map((d,i)=>{
+    const head=`<div class="day-head"><span class="badge">${d.num}</span><div><h2>${T('اليوم')} ${d.num}: ${T(d.titleAr)}</h2>${LANG==='en'?'':`<p class="sub">${d.titleEn}</p>`}</div></div>`;
+    const wrap=inner=>`<section class="day-panel ${i===ACTIVE?'active':''}" data-idx="${i}" style="--dc:var(${d.c});--dt:var(${d.t})">${head}${inner}</section>`;
+    if(ADMIN) return wrap(`<div class="timeline">${d.blocks.map(b=>renderBlock(b,d,null)).join('')}</div>`);
+    if(!d.open) return wrap(`<div class="lockbox">🔒 ${T('مغلق حتى يعتمد المدرب اليوم السابق')}</div>`);
+    return wrap(`<div class="timeline">${d.blocks.map(b=>traineeBlockHTML(b,d)).join('')}</div>${dayCheckHTML(d,i)}`);
+  }).join('');
+  applyStatic();
+  onScrollStuck();
+}
+function renderProgress(){
+  const el=document.getElementById('progress'); let h='';
+  if(!/^https:/.test(API_URL)) h=`<div class="pcard note">${T('لم يُضبط رابط الخادم بعد. اتبع خطوات الإعداد ثم ضع الرابط في الصفحة.')}</div>`;
+  else if(LOAD==='loading') h=`<div class="pcard note">${T('جارٍ التحميل…')}</div>`;
+  else if(LOAD==='slow') h=`<div class="pcard note">${T('تعذّر الوصول إلى الخادم الآن. حاول لاحقاً.')}</div>`;
+  else if(ADMIN) h=adminHTML();
+  else if(!VIEW) h=loginHTML();
+  else h=traineeProgressHTML();
+  el.innerHTML=h;
+}
+function refresh(){
+  const a=document.activeElement;
+  if(a && a.id && /^(q_|sc_|nt_)/.test(a.id)){ PENDING=true; return; }
+  PENDING=false; render(); adminBar();
+}
+document.addEventListener('focusout',()=>{ if(PENDING) setTimeout(()=>{ if(PENDING) refresh(); },120); });
+function onScrollStuck(){
+  const a=document.getElementById('tabsAnchor'), t=document.getElementById('dayTabs');
+  if(a&&t) t.classList.toggle('stuck', a.getBoundingClientRect().top < -2);
+}
+window.addEventListener('scroll', onScrollStuck, {passive:true});
+window.addEventListener('resize', onScrollStuck);
+
+/* ---------- admin bar / auth ---------- */
+function adminBar(){
+  const el=document.getElementById('adminBar'); if(!el) return;
+  if(el.querySelector('input:focus')) return;
+  if(ADMIN){ el.innerHTML=`<button class="btn ghost" type="button" data-act="adminout">${T('خروج الأدمن')}</button>`; return; }
+  el.innerHTML = el.dataset.open==='1'
+   ? `<form class="nameform" id="adminForm"><input id="pinInput" type="password" autocomplete="off" placeholder="${T('رمز الأدمن')}" required><button class="btn" type="submit">${T('دخول')}</button></form>`
+   : `<button class="btn ghost" type="button" data-act="adminopen">${T('دخول الأدمن')}</button>`;
+}
+function adminOut(){ ADMIN=false; PIN=null; AC=null; TRAINEES={}; REVIEWS={}; SEL=null; INIT_TAB=false; ACTIVE=0; try{sessionStorage.removeItem('csmPin');}catch(e){} LOAD='loading'; boot(); }
+async function loadAdmin(first){
+  try{
+    const [l,c]=await Promise.all([API('admin_list',{pin:PIN}), first||!AC?API('admin_content',{pin:PIN}):Promise.resolve(null)]);
+    TRAINEES=l.trainees||{}; REVIEWS=l.reviews||{};
+    if(c){ AC=c; Object.assign(EN,c.en||{}); }
+    LOAD='ready';
+  }catch(e){ if(e.code==='bad_pin'){ adminOut(); return false; } if(LOAD!=='ready') LOAD='slow'; }
+  refresh(); return true;
+}
+async function loadTrainee(){
+  try{ setView(await API('view',{code:CODE})); }
+  catch(e){ if(e.code==='bad_code'){ CODE=null; VIEW=null; try{localStorage.removeItem('csmCode');}catch(_){} LOAD='ready'; refresh(); toast(T('رمز غير صحيح')); } else if(LOAD!=='ready'){ LOAD='slow'; refresh(); } }
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('.day-tab');
+  if(tab){
+    const i=+tab.dataset.idx;
+    if(!isOpen(i)){ toast(T('مغلق حتى يعتمد المدرب اليوم السابق')); return; }
+    ACTIVE=i;
+    document.querySelectorAll('.day-tab').forEach(x=>x.classList.toggle('active',x===tab));
+    document.querySelectorAll('.day-panel').forEach(x=>x.classList.toggle('active',+x.dataset.idx===i));
+    const a=document.getElementById('tabsAnchor');
+    window.scrollTo({top:a.getBoundingClientRect().top+window.scrollY,behavior:'smooth'});
+    return;
+  }
+  const el=e.target.closest('[data-act]'); if(!el) return;
+  const act=el.dataset.act, ds=days();
+  if(act==='adminopen'){ const b=document.getElementById('adminBar'); b.dataset.open='1'; adminBar(); const i=document.getElementById('pinInput'); if(i) i.focus(); return; }
+  if(act==='adminout'){ adminOut(); return; }
+  if(act==='logout'){ CODE=null; VIEW=null; INIT_TAB=false; try{localStorage.removeItem('csmCode');}catch(_){} render(); return; }
+  if(act==='sel'){ SEL = SEL===el.dataset.uid ? null : el.dataset.uid; render(); return; }
+  const di=+el.dataset.day, d=ds[di], k=d&&dk(d);
+  if(ADMIN){
+    if(act==='rm'){
+      if(el.dataset.arm!=='1'){ el.dataset.arm='1'; el.textContent=T('اضغط مرة أخرى للتأكيد'); setTimeout(()=>{ if(el.isConnected){ el.dataset.arm='0'; el.textContent=T('حذف المتدرب'); } },4000); return; }
+      const uid=el.dataset.uid; SEL=null;
+      enqueue(async()=>{ await API('admin_remove',{pin:PIN,code:uid}); delete TRAINEES[uid]; delete REVIEWS[uid]; refresh(); },'حُذف');
+      return;
+    }
+    if(!SEL) return;
+    const uid=SEL;
+    if(act==='blockdone'){
+      const bk=el.dataset.bk, val=+el.dataset.val;
+      enqueue(async()=>{ await API('admin_blockdone',{pin:PIN,code:uid,bk,val}); const t=TRAINEES[uid]; t.done=t.done||{}; if(val) t.done[bk]=Date.now(); else delete t.done[bk]; refresh(); },'حُفظ');
+      return;
+    }
+    if(act==='saverev'||act==='approve'||act==='revoke'){
+      const mx=MAXP(d.num), scores={};
+      Object.keys(mx).forEach(c=>{ const v=document.getElementById('sc_'+k+'_'+c); const n=Math.max(0,Math.min(mx[c],Math.round(+((v&&v.value)||0)))); scores[c]=isNaN(n)?0:n; });
+      const prev=revDay(REVIEWS[uid],d)||{};
+      const note=(document.getElementById('nt_'+k)||{}).value||'';
+      const day={scores, note, approved: act==='approve' ? true : (act==='revoke' ? false : !!prev.approved)};
+      if(act==='approve') day.approvedAt=Date.now();
+      const data={days:{[k]:day}};
+      enqueue(async()=>{ await API('review_merge',{pin:PIN,code:uid,data}); REVIEWS[uid]=deepMerge(REVIEWS[uid],data); refresh(); }, act==='approve'?'تم اعتماد اليوم':(act==='revoke'?'أُلغي الاعتماد':'حُفظ'));
+      return;
+    }
+    if(act==='force'){
+      const rv=REVIEWS[uid]||{}, cur=!!(rv.open&&rv.open[k]);
+      const data={open:{[k]:!cur}};
+      enqueue(async()=>{ await API('review_merge',{pin:PIN,code:uid,data}); REVIEWS[uid]=deepMerge(REVIEWS[uid],data); refresh(); },'حُفظ');
+      return;
+    }
+    return;
+  }
+  if(!VIEW) return;
+  if(act==='tick'){
+    const key=el.dataset.key, val=el.checked;
+    if(val) VIEW.tr.ticks[key]=1; else delete VIEW.tr.ticks[key];
+    enqueue(async()=>{ setView(await API('tick',{code:CODE,key,val:val?1:0})); });
+    return;
+  }
+  if(act==='mark'){ const bk=el.dataset.bk; enqueue(async()=>{ setView(await API('mark',{code:CODE,bk})); },'تم'); return; }
+  if(act==='addq'){
+    const inp=document.getElementById('q_'+k), v=((inp&&inp.value)||'').trim(); if(!v) return; inp.value='';
+    enqueue(async()=>{ setView(await API('addq',{code:CODE,day:d.num,text:v})); },'حُفظ'); return;
+  }
+  if(act==='delq'){ const n=+el.dataset.n; enqueue(async()=>{ setView(await API('delq',{code:CODE,day:d.num,n})); }); return; }
+  if(act==='submit'){ enqueue(async()=>{ setView(await API('submit',{code:CODE,day:d.num})); },'تم الإرسال'); return; }
+});
+function deepMerge(a,b){ const o=Object.assign({},a||{}); for(const k in b){ const v=b[k]; o[k]=(v&&typeof v==='object'&&!Array.isArray(v)&&o[k]&&typeof o[k]==='object'&&!Array.isArray(o[k]))?deepMerge(o[k],v):v; } return o; }
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && e.target && e.target.id && e.target.id.indexOf('q_')===0){
+    e.preventDefault(); const b=e.target.parentElement.querySelector('[data-act="addq"]'); if(b) b.click();
+  }
+});
+document.addEventListener('submit',async e=>{
+  const id=e.target.id;
+  if(id==='adminForm'){
+    e.preventDefault();
+    const pin=(document.getElementById('pinInput').value||'').trim(); if(!pin) return;
+    try{ await API('admin_list',{pin}); }catch(err){ toast(T(err.code==='bad_pin'?'رمز غير صحيح':'تعذّر الاتصال بالخادم')); return; }
+    PIN=pin; try{sessionStorage.setItem('csmPin',pin);}catch(_){}
+    ADMIN=true; VIEW=null; LOAD='loading'; SEL=null; INIT_TAB=false; render(); adminBar(); await loadAdmin(true); return;
+  }
+  if(id==='loginForm'){
+    e.preventDefault();
+    const v=(document.getElementById('codeInput').value||'').trim().toUpperCase(); if(!v) return;
+    try{ const j=await API('view',{code:v}); CODE=v; try{localStorage.setItem('csmCode',v);}catch(_){} setView(j); }
+    catch(err){ toast(T(err.code==='bad_code'?'رمز غير صحيح':'تعذّر الاتصال بالخادم')); }
+    return;
+  }
+  if(id==='addForm'){
+    e.preventDefault();
+    const nm=(document.getElementById('addName').value||'').trim(); if(!nm||!ADMIN) return;
+    try{ const j=await API('admin_add',{pin:PIN,name:nm}); NEWCODE={name:nm,code:j.code}; await loadAdmin(false); }
+    catch(err){ toast(T('تعذّر الحفظ')); }
+    return;
+  }
+  if(e.target.classList&&e.target.classList.contains('vform')){
+    e.preventDefault();
+    const bk=e.target.dataset.bk, w=(e.target.querySelector('.vword').value||'').trim(); if(!w) return;
+    enqueue(async()=>{ setView(await API('verify',{code:CODE,bk,word:w})); toast(T('تم فتح مادة الجلسة')); });
+  }
+});
+document.getElementById('langBtn').addEventListener('click',()=>{
+  LANG = LANG==='en' ? 'ar' : 'en';
+  try{ localStorage.setItem('csmLang', LANG); }catch(e){}
+  render(); adminBar();
+});
+
+/* ---------- viewing-time heartbeat ---------- */
+async function beat(){
+  if(ADMIN||!VIEW||document.visibilityState!=='visible') return;
+  let tgt=null;
+  VIEW.days.forEach(d=>{ if(d.open&&!d.approved) d.blocks.forEach(b=>{ if(!tgt&&b.status==='current'&&(b.type==='session'||b.type==='closing')&&b.video&&b.video.avail&&!b.video.ready) tgt=b; }); });
+  if(!tgt) return;
+  try{
+    const j=await API('hb',{code:CODE,bk:tgt.key});
+    tgt.video.active=j.active; tgt.video.need=j.need; tgt.video.ready=j.ready;
+    if(j.ready){ refresh(); return; }
+    const bar=document.getElementById('vp_'+tgt.key), tx=document.getElementById('vt_'+tgt.key);
+    if(bar) bar.style.width=Math.min(100,Math.round(j.active*100/j.need))+'%';
+    if(tx){ const b=tx.querySelector('b'); if(b) b.textContent=mmss(j.active); }
+  }catch(e){ if(e.code==='bad_code') loadTrainee(); }
+}
+setInterval(beat,15000);
+setInterval(()=>{ if(LOAD!=='ready'||document.visibilityState!=='visible') return; if(ADMIN) loadAdmin(false); },30000);
+
+async function boot(){
+  render(); adminBar();
+  if(!/^https:/.test(API_URL)){ LOAD='ready'; render(); return; }
+  try{ PIN=sessionStorage.getItem('csmPin'); }catch(e){}
+  if(PIN){ ADMIN=true; const ok=await loadAdmin(true); if(ok) return; }
+  try{ CODE=localStorage.getItem('csmCode'); }catch(e){}
+  if(CODE){ await loadTrainee(); }
+  else { LOAD='ready'; render(); }
+}
+boot();
+</script>
+</body></html>
